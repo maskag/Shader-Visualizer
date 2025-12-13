@@ -9,8 +9,6 @@
 	"id": "maskagd.shader_visualizer",
 	"name": "Trigger Visualizer",
 	"version": "v1.1.0",
-	"name": "Shader Visualizer",
-	"version": "v1.1.0",
 	"developer": "maskagd",
 	"description": "Trigger Visualizer",
 	"resources": {
@@ -43,8 +41,5 @@
 			"name": "New area triggers texture",
 			"default": true
 		}
-    },
-
-	"tags": ["editor", "offline", "customization"]
-
+    }
 }
