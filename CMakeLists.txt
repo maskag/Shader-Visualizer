@@ -8,7 +8,7 @@ else()
 endif()
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
-project(OldColorTriggers VERSION 1.0.0)
+project(triggervisualizer VERSION 1.1.0)
 
 file(GLOB SOURCES
 	src/*.cpp
