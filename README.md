@@ -5,8 +5,6 @@
 <img src="logo.png" width="150" alt="the mod's logo" />
 
 ---
-<<<<<<< HEAD
-=======
 
 ## About
 Trigger Visualizer replaces the editor textures of multiple trigger types to improve readability and visual clarity while building levels.
@@ -53,11 +51,9 @@ This allows you to keep the default look for certain triggers (such as <cr>area<
 
 ---
 
-<<<<<<< HEAD
 ### Notes
 - This mod only affects the **editor**.
 - Gameplay behavior of triggers is not modified.
-=======
 
 
 
