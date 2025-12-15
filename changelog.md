@@ -1,3 +1,11 @@
+# 1.30
+- Added dynamic texture updates for SFX and Event triggers:
+  - SFX textures now change depending on volume.
+  - Event textures now change based on their settings.
+  - Settings allow disabling dynamic updates for SFX or Event triggers.
+  - Added volume threshold setting for SFX triggers to control texture changes.
+- Added several new textures for triggers that previously did not have custom visuals.
+
 # 1.20
 - Added new cameras trigger texture
 - Added some new trigger texture

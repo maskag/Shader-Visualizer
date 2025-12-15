@@ -1,31 +1,42 @@
-# Shader Visualizer
+# Trigger Visualizer
 **Improves trigger visuals in the editor by replacing their textures.**
-> ![✳️](frame:collaborationIcon_001.png) <cg>*This mod includes settings to control which trigger categories are affected.*</c>
 
 <img src="logo.png" width="150" alt="the mod's logo" />
 
 ---
-## About
-Trigger Visualizer replaces the editor textures of multiple trigger types to improve readability and visual clarity while building levels.
 
-Originally focused only on shader triggers, the mod now also updates textures for other default trigger categories, including:
+## About
+Trigger Visualizer improves readability and visual clarity in the editor by updating textures for multiple trigger types.
+
+Originally focused on shader triggers, the mod now also supports other default trigger categories, including:
+
 - <cb>Shader triggers</c>
 - <cy>Gameplay triggers</c>
 - <cr>Area triggers</c>
 - <cp>Logical triggers</c>
 - <cc>Cameras triggers</c>
 
-This makes different trigger types easier to recognize and work with in complex setups.
+In addition, the mod introduces **dynamic texture updates** for:
+
+- <cm>SFX triggers</c> — textures change depending on their volume.
+- <ce>Event triggers</c> — textures change based on their event settings.
+
+These updates make different trigger types easier to identify and manage, especially in complex setups.
 
 ---
 
-### Customization
-In <cg>this mod’s settings</c>, you can enable or disable texture changes for specific trigger categories.
+## Customization
+In <cg>this mod’s settings</c>, you can:
 
-This allows you to keep the default look for certain triggers (such as <cr>area</c> or <cp>shader</c> triggers) while still using custom visuals for others.
+- Enable or disable texture changes for specific trigger categories.
+- Enable or disable **dynamic texture updates** for <cm>SFX</c> and <ce>Event</c> triggers.
+- Set a **volume threshold** for SFX triggers to control when their textures change.
+
+This lets you keep the default look for certain triggers while still using custom or dynamic visuals for others.
 
 ---
 
-### Notes
+## Notes
 - This mod only affects the **editor**.
 - Gameplay behavior of triggers is not modified.
+a

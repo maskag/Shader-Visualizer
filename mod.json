@@ -8,7 +8,7 @@
 	},
 	"id": "maskagd.shader_visualizer",
 	"name": "Trigger Visualizer",
-	"version": "v1.2.0",
+	"version": "v1.3.0",
 	"developer": "maskagd",
 	"description": "Trigger Visualizer",
 	"resources": {
@@ -49,21 +49,105 @@
 			"description": "New textures for area triggers",
 			"default": true
 		},
-		"cam-title": {
+		"do-cam": {
+			"type": "bool",
+			"name": "Cameras triggers texture",
+			"description": "New textures for Cameras triggers",
+			"default": true
+		},
+		"dynamic-title": {
             "type": "title",
-            "name": "Cameras texture settings" 
+            "name": "dynamic texture settings"
+        },
+		"dyn-ev": {
+			"type": "bool",
+			"name": "Event dynamic texture",
+			"description": "event texture changes depending on the event settings",
+			"default": true
+		},
+		"dyn-sfx": {
+			"type": "bool",
+			"name": "SFX dynamic texture",
+			"description": "SFX texture changes depending on the SFX volume",
+			"default": true
+		},
+		"sfx2": {
+			"type": "float",
+			"name": "SFX 1/4",
+			"description": "Set the SFX volume so it shows one of the four levels",
+			"default": 0.25,
+			"min": 0.0,
+			"max": 2.0,
+			"controls": {
+				"arrows": true,
+				"arrow-step": 0.1,
+				"big-arrows": false,
+				"big-arrow-step": 0.5,
+				"slider": true,
+				"slider-step": 0.1,
+				"input": true
+			}
+		},
+		"sfx3": {
+			"type": "float",
+			"name": "SFX 2/4",
+			"description": "Set the SFX volume so it shows two of the four levels",
+			"default": 0.50,
+			"min": 0.0,
+			"max": 2.0,
+			"controls": {
+				"arrows": true,
+				"arrow-step": 0.1,
+				"big-arrows": false,
+				"big-arrow-step": 0.5,
+				"slider": true,
+				"slider-step": 0.1,
+				"input": true
+			}
+		},
+		"sfx4": {
+			"type": "float",
+			"name": "SFX 3/4",
+			"description": "Set the SFX volume so it shows three of the four levels",
+			"default": 0.75,
+			"min": 0.0,
+			"max": 2.0,
+			"controls": {
+				"arrows": true,
+				"arrow-step": 0.1,
+				"big-arrows": false,
+				"big-arrow-step": 0.5,
+				"slider": true,
+				"slider-step": 0.1,
+				"input": true
+			}
+		},
+		"sfx5": {
+			"type": "float",
+			"name": "SFX 4/4",
+			"description": "Set the SFX volume so it shows four of the four levels",
+			"default": 1.25,
+			"min": 0.0,
+			"max": 2.0,
+			"controls": {
+				"arrows": true,
+				"arrow-step": 0.1,
+				"big-arrows": false,
+				"big-arrow-step": 0.5,
+				"slider": true,
+				"slider-step": 0.1,
+				"input": true
+			}
+		},
+		"other-title": {
+            "type": "title",
+            "name": "other settings"
         },
 		"color-cam": {
 			"type": "bool",
 			"name": "Default color texture",
 			"description": "Restore the camera color to the standard",
 			"default": false
-		},
-		"do-cam": {
-			"type": "bool",
-			"name": "Cameras triggers texture",
-			"description": "New textures for Cameras triggers",
-			"default": true
 		}
     }
 }

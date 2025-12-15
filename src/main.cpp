@@ -3,8 +3,174 @@
 #include <Geode/modify/CCSpriteBatchNode.hpp>
 #include <Geode/modify/LevelEditorLayer.hpp>
 #include <Geode/modify/CCSprite.hpp>
-
+#include <Geode/modify/SetupSFXPopup.hpp>
+#include <Geode/binding/SFXTriggerGameObject.hpp>
+#include <Geode/binding/ToggleTriggerAction.hpp>
+#include <Geode/modify/SetupEventLinkPopup.hpp>
+#include <Geode/binding/EventLinkTrigger.hpp>
+#include <Geode/modify/SetupTriggerPopup.hpp>
+#include <Geode/loader/SettingV3.hpp>
 using namespace geode::prelude;
+
+class $modify(SetupTriggerPopup) {
+    void onClose(cocos2d::CCObject* sender) {
+        this->applyChangesToObjects();
+        SetupTriggerPopup::onClose(sender);
+    }
+
+     void applyChangesToObjects() {
+
+		auto ev = Mod::get()->getSettingValue<bool>("dyn-ev");
+
+		if (!ev) return;
+
+        auto lel = LevelEditorLayer::get();
+        if (!lel) return;
+
+        auto arr = lel->m_objects;
+        if (!arr) return;
+
+        for (int i = 0; i < arr->count(); i++) {
+            auto obj = static_cast<EffectGameObject*>(arr->objectAtIndex(i));
+            if (!obj || obj->m_objectID != 3604) continue;
+
+            updateObjectTexture(typeinfo_cast<EventLinkTrigger*>(obj));
+        }
+    }
+
+	static void updateObjectTexture(EventLinkTrigger* obj) {
+		if (!obj) return;
+
+		const auto& eids = obj->m_eventIDs;
+		const char* texture = "ev.png"_spr; // дефолтная текстура
+
+		for (int id : eids) {
+			if (id >= 1 && id <= 5) {
+				texture = "evland.png"_spr;
+				break;
+			} 
+			else if (id == 6) {
+				texture = "evhit.png"_spr;
+				break;
+			} 
+			else if (id == 7 || id == 8) {
+				texture = "evorb.png"_spr;
+				break;
+			} 
+			else if (id == 9) {
+				texture = "evpad.png"_spr;
+				break;
+			} 
+			else if (id == 10 || id == 11) {
+				texture = "evgravity.png"_spr;
+				break;
+			} 
+			else if (id >= 12 && id <= 22) {
+				texture = "evjump.png"_spr;
+				break;
+			} 
+			else if (id >= 34 && id <= 44) {
+				texture = "evorb.png"_spr;
+				break;
+			} 
+			else if (id >= 45 && id <= 49) {
+				texture = "evpad.png"_spr;
+				break;
+			} 
+			else if (id >= 50 && id <= 52) {
+				texture = "evgravity.png"_spr;
+				break;
+			} 
+			else if (id == 62 || id == 63) {
+				texture = "evcoin.png"_spr;
+				break;
+			} 
+			else if (id >= 65 && id <= 68) {
+				texture = "evfall.png"_spr;
+				break;
+			} 
+			else if (id == 69 || id == 70) {
+				texture = "evtop.png"_spr;
+				break;
+			} 
+			else if (id == 71 || id == 72) {
+				texture = "evleft.png"_spr;
+				break;
+			} 
+			else if (id == 73 || id == 74) {
+				texture = "evright.png"_spr;
+				break;
+			}
+			else if (id == 60 || id == 64) {
+				texture = "evsave.png"_spr;
+				break;
+			}
+			else if (id >= 26 && id <= 33 || id >= 50 && id <= 59) {
+				texture = "evportal.png"_spr;
+				break;
+			} 
+		}
+
+		
+		if (!texture) return;
+
+		if (auto spr = CCSprite::create(texture)) {
+			obj->setTexture(spr->getTexture());
+			obj->setTextureRect(spr->getTextureRect());
+		}
+	}
+};
+
+class $modify(SetupSFXPopup) {
+    void onClose(cocos2d::CCObject* sender) {
+        this->applyChangesToObjects();
+        SetupSFXPopup::onClose(sender);
+    }
+
+     void applyChangesToObjects() {
+		
+		auto sfx = Mod::get()->getSettingValue<bool>("dyn-sfx");
+
+		if (!sfx) return;
+
+        auto lel = LevelEditorLayer::get();
+        if (!lel) return;
+
+        auto arr = lel->m_objects;
+        if (!arr) return;
+
+        for (int i = 0; i < arr->count(); i++) {
+            auto obj = static_cast<EffectGameObject*>(arr->objectAtIndex(i));
+            if (!obj || obj->m_objectID != 3602) continue;
+
+            updateObjectTexture(typeinfo_cast<SFXTriggerGameObject*>(obj));
+        }
+    }
+
+    static void updateObjectTexture(SFXTriggerGameObject* obj) {
+        if (!obj) return;
+
+        float volume = obj->m_volume;
+
+        const char* texture = nullptr;
+
+		auto sfx2 = Mod::get()->getSettingValue<float>("sfx2");
+		auto sfx3 = Mod::get()->getSettingValue<float>("sfx3");
+		auto sfx4 = Mod::get()->getSettingValue<float>("sfx4");
+		auto sfx5 = Mod::get()->getSettingValue<float>("sfx5");
+
+        if (volume > sfx5) texture = "sfx5.png"_spr;
+        else if (volume > sfx4) texture = "sfx4.png"_spr;
+        else if (volume > sfx3) texture = "sfx3.png"_spr;
+		else if (volume > sfx2) texture = "sfx2.png"_spr;
+        else texture = "sfx1.png"_spr;
+
+        if (CCSprite* spr = CCSprite::create(texture)) {
+            obj->setTexture(spr->getTexture());
+            obj->setTextureRect(spr->getTextureRect());
+        }
+    }
+};
 
 class $modify(MyEffectGameObject, EffectGameObject) {
 	void customSetup() {
@@ -16,7 +182,7 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 		auto area = Mod::get()->getSettingValue<bool>("do-area");
 		auto ccolor = Mod::get()->getSettingValue<bool>("color-cam");
 		auto cam = Mod::get()->getSettingValue<bool>("do-cam");
-
+		
 		if (shader == true)
 		switch(m_objectID){
 
@@ -145,6 +311,50 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 				setIcon("control.png"_spr);
 				break;
 			}
+			case 2999: {
+				setIcon("mg.png"_spr);
+				break;
+			}
+			case 3606: {
+				setIcon("bgs.png"_spr);
+				break;
+			}
+			case 3612: {
+				setIcon("mgs.png"_spr);
+				break;
+			}
+			case 3613: {
+				setIcon("ui.png"_spr);
+				break;
+			}
+			case 2899: {
+				setIcon("options.png"_spr);
+				break;
+			}
+			case 3602: {
+				setIcon("sfx.png"_spr);
+				break;
+			}
+			case 3603: {
+				setIcon("esfx.png"_spr);
+				break;
+			}
+			case 31: {
+				setIcon("start.png"_spr);
+				break;
+			}
+			case 3600: {
+				setIcon("end.png"_spr);
+				break;
+			}
+			case 2901: {
+				setIcon("gpoff.png"_spr);
+				break;
+			}
+			case 1917: {
+				setIcon("reverse.png"_spr);
+				break;
+			}
 		}
 		
 		if (logic == true)
@@ -207,6 +417,10 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 			}
 			case 3609: {
 				setIcon("advcolis.png"_spr);
+				break;
+			}
+			case 3604: {
+				setIcon("ev.png"_spr);
 				break;
 			}
 		}
@@ -295,7 +509,7 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 							break;
 					}
 					case 1916: {
-						setIcon("coffset.png"_spr);
+						setIcon("Coffset.png"_spr);
 							break;
 					}
 					case 2015: {
@@ -350,7 +564,6 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 			}	
 		}
 		
-	
 }
 	
 
