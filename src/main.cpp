@@ -1,7 +1,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/EffectGameObject.hpp>
 #include <Geode/modify/CCSpriteBatchNode.hpp>
-#include <Geode/modify/LevelEditorLayer.hpp>
+#include <Geode/modify/EditorUI.hpp>
 #include <Geode/modify/CCSprite.hpp>
 #include <Geode/modify/SetupSFXPopup.hpp>
 #include <Geode/binding/SFXTriggerGameObject.hpp>
@@ -10,7 +10,10 @@
 #include <Geode/binding/EventLinkTrigger.hpp>
 #include <Geode/modify/SetupTriggerPopup.hpp>
 #include <Geode/loader/SettingV3.hpp>
+#include <Geode/ui/Popup.hpp>
+
 using namespace geode::prelude;
+
 
 class $modify(SetupTriggerPopup) {
     void onClose(cocos2d::CCObject* sender) {
@@ -42,7 +45,7 @@ class $modify(SetupTriggerPopup) {
 		if (!obj) return;
 
 		const auto& eids = obj->m_eventIDs;
-		const char* texture = "ev.png"_spr; // дефолтная текстура
+		const char* texture = "ev.png"_spr; 
 
 		for (int id : eids) {
 			if (id >= 1 && id <= 5) {
@@ -180,9 +183,13 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 		auto logic = Mod::get()->getSettingValue<bool>("do-logic");
 		auto shader = Mod::get()->getSettingValue<bool>("do-shader");
 		auto area = Mod::get()->getSettingValue<bool>("do-area");
+		auto colis = Mod::get()->getSettingValue<bool>("do-colis");
 		auto ccolor = Mod::get()->getSettingValue<bool>("color-cam");
 		auto cam = Mod::get()->getSettingValue<bool>("do-cam");
-		
+		auto startp = Mod::get()->getSettingValue<bool>("new-start");
+		auto cstop = Mod::get()->getSettingValue<bool>("color-stop");
+		auto shakep = Mod::get()->getSettingValue<bool>("new-shake");
+
 		if (shader == true)
 		switch(m_objectID){
 
@@ -340,8 +347,13 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 				break;
 			}
 			case 31: {
-				setIcon("start.png"_spr);
-				break;
+				if (!startp) {
+					setIcon("start.png"_spr);
+					break;
+				}
+				else {
+					break;
+				}	
 			}
 			case 3600: {
 				setIcon("end.png"_spr);
@@ -355,6 +367,14 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 				setIcon("reverse.png"_spr);
 				break;
 			}
+			case 1934: {
+				setIcon("song.png"_spr);
+				break;
+			}
+			case 3605: {
+				setIcon("editsong.png"_spr);
+				break;
+			} 
 		}
 		
 		if (logic == true)
@@ -468,8 +488,14 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 				break;
 			}
 			case 3024: {
-				setIcon("astop.png"_spr);
-				break;
+				if (cstop) {
+					setIcon("astopc.png"_spr);
+					break;
+				}
+				else {
+					setIcon("astop.png"_spr);
+					break;
+				}
 			}
 			case 3017: {
 				setIcon("emove.png"_spr);
@@ -492,8 +518,14 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 				break;
 			}
 			case 3023: {
-				setIcon("estop.png"_spr);
-				break;
+				if (cstop) {
+					setIcon("estopc.png"_spr);
+					break;
+				}
+				else {
+					setIcon("estop.png"_spr);
+					break;
+				}
 			}
 		}
 
@@ -527,7 +559,16 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 					case 2016: {
 						setIcon("guide.png"_spr);
 							break;
-					}	
+					}
+					case 1520: {
+						if (!shakep) {
+							setIcon("shake.png"_spr);
+							break;
+						}
+						else {
+							break;
+						}
+					}		
 				}
 			}
 			else {
@@ -559,13 +600,37 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 					case 2016: {
 						setIcon("guide.png"_spr);
 							break;
-					}	
+					}
+					case 1520: {
+						if (!shakep) {
+							setIcon("shake.png"_spr);
+							break;
+						}
+						else {
+							break;
+						}
+					}
 				}
 			}	
 		}
 		
-}
-	
+		if (colis == true) 
+		switch(m_objectID) {
+			case 3640: {
+				setIcon("colisin.png"_spr);
+				break;
+			}
+			case 1816: {
+				setIcon("colisblock.png"_spr);
+				break;
+			}
+			case 3643: {
+				setIcon("colistouch.png"_spr);
+				break;
+			}
+		}
+		
+	}	
 
 	void setIcon(std::string texture){
 		if (CCSprite* newSpr = CCSprite::create(texture.c_str())) {

@@ -1,4 +1,11 @@
-# 1.30
+## v1.3.1
+- Added new trigger textures (song, song edit, shake)
+- Added new settings:
+  - Reset StartPos trigger texture
+  - Reset Shake trigger texture
+  - Reset Area Stop trigger texture
+
+## v1.30
 - Added dynamic texture updates for SFX and Event triggers:
   - SFX textures now change depending on volume.
   - Event textures now change based on their settings.
@@ -6,12 +13,12 @@
   - Added volume threshold setting for SFX triggers to control texture changes.
 - Added several new textures for triggers that previously did not have custom visuals.
 
-# 1.20
+## v1.20
 - Added new cameras trigger texture
 - Added some new trigger texture
 - Added new settings
 
-# 1.10
+## v1.10
 - Added new trigger texture:
   - Gameplay triggers
   - Area triggers
@@ -21,9 +28,9 @@
 - Fixed shader trigger icon offset in the editor
 - Improved overall editor visual clarity
 
-# 1.0.1
+## v1.0.1
 - Cross-platform release
 
-# 1.0.0
+## v1.0.0
 - Initial release
 
