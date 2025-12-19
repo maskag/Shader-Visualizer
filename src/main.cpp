@@ -7,12 +7,136 @@
 #include <Geode/binding/SFXTriggerGameObject.hpp>
 #include <Geode/binding/ToggleTriggerAction.hpp>
 #include <Geode/modify/SetupEventLinkPopup.hpp>
+#include <Geode/modify/SetupMoveCommandPopup.hpp>
 #include <Geode/binding/EventLinkTrigger.hpp>
 #include <Geode/modify/SetupTriggerPopup.hpp>
 #include <Geode/loader/SettingV3.hpp>
 #include <Geode/ui/Popup.hpp>
 
 using namespace geode::prelude;
+
+CCSprite* createIconSprite(std::string const& name) {
+    auto modPath = Mod::get()->expandSpriteName(name.c_str());
+    
+    if (auto spr = CCSprite::create(std::string(modPath).c_str())) {
+        return spr;
+    }
+    if (auto spr = CCSprite::createWithSpriteFrameName(name.c_str())) {
+        return spr;
+    }
+    if (auto spr = CCSprite::create(name.c_str())) {
+        return spr;
+    }
+    return CCSprite::create(); 
+}
+
+class SpriteSwitchSettingV3 : public SettingBaseValueV3<bool> {
+public:
+    std::string m_spr1; 
+    std::string m_spr2; 
+
+    static Result<std::shared_ptr<SettingV3>> parse(std::string const& key, std::string const& modID, matjson::Value const& json) {
+        auto res = std::make_shared<SpriteSwitchSettingV3>();
+        auto root = checkJson(json, "SpriteSwitchSettingV3");
+        
+        res->parseBaseProperties(key, modID, root);
+        
+        root.has("spr1").into(res->m_spr1);
+        root.has("spr2").into(res->m_spr2);
+
+        return root.ok(std::static_pointer_cast<SettingV3>(res));
+    }
+
+    SettingNodeV3* createNode(float width) override;
+};
+
+class SpriteSwitchNodeV3 : public SettingValueNodeV3<SpriteSwitchSettingV3> {
+protected:
+    bool init(std::shared_ptr<SpriteSwitchSettingV3> setting, float width) {
+        if (!SettingValueNodeV3::init(setting, width))
+            return false;
+        
+        auto menu = this->getButtonMenu();
+        menu->removeAllChildren();
+
+        auto btn1Spr = createIconSprite(setting->m_spr1);
+        btn1Spr->setScale(0.6f); 
+        auto btn1 = CCMenuItemSpriteExtra::create(btn1Spr, this, menu_selector(SpriteSwitchNodeV3::onSelectFalse));
+        btn1->setTag(0); 
+        
+        auto btn2Spr = createIconSprite(setting->m_spr2);
+        btn2Spr->setScale(0.6f);
+        auto btn2 = CCMenuItemSpriteExtra::create(btn2Spr, this, menu_selector(SpriteSwitchNodeV3::onSelectTrue));
+        btn2->setTag(1); 
+
+        menu->addChild(btn1);
+        menu->addChild(btn2);
+        
+        auto layout = RowLayout::create();
+        layout->setGap(10.f); 
+        layout->setAxisAlignment(AxisAlignment::End); 
+        
+        menu->setLayout(layout);
+        menu->setContentSize({ 90.f, 40.f }); 
+        menu->updateLayout();
+
+        this->updateState(nullptr);
+        return true;
+    }
+
+    void onSelectFalse(CCObject*) {
+        this->setValue(false, nullptr);
+    }
+
+    void onSelectTrue(CCObject*) {
+        this->setValue(true, nullptr);
+    }
+
+    void updateState(CCNode* invoker) override {
+        SettingValueNodeV3::updateState(invoker);
+        auto val = this->getValue();
+
+        auto menu = this->getButtonMenu();
+        if (auto btn1 = static_cast<CCMenuItemSpriteExtra*>(menu->getChildByTag(0))) {
+            btn1->setColor(val ? ccGRAY : ccWHITE);
+            btn1->setOpacity(val ? 120 : 255);
+        }
+        if (auto btn2 = static_cast<CCMenuItemSpriteExtra*>(menu->getChildByTag(1))) {
+            btn2->setColor(val ? ccWHITE : ccGRAY);
+            btn2->setOpacity(val ? 255 : 120);
+        }
+    }
+
+public:
+    static SpriteSwitchNodeV3* create(std::shared_ptr<SpriteSwitchSettingV3> setting, float width) {
+        auto ret = new SpriteSwitchNodeV3();
+        if (ret->init(setting, width)) {
+            ret->autorelease();
+            return ret;
+        }
+        delete ret;
+        return nullptr;
+    }
+};
+
+SettingNodeV3* SpriteSwitchSettingV3::createNode(float width) {
+    return SpriteSwitchNodeV3::create(std::static_pointer_cast<SpriteSwitchSettingV3>(shared_from_this()), width);
+}
+
+
+bool getSwitchValue(std::string const& key) {
+    auto setting = Mod::get()->getSetting(key);
+    
+    if (auto mySetting = std::dynamic_pointer_cast<SpriteSwitchSettingV3>(setting)) {
+        return mySetting->getValue();
+    }
+    
+    return false;
+}
+
+$execute {
+    (void)Mod::get()->registerCustomSettingType("sprite-switch", &SpriteSwitchSettingV3::parse);
+}
 
 
 class $modify(SetupTriggerPopup) {
@@ -23,7 +147,7 @@ class $modify(SetupTriggerPopup) {
 
      void applyChangesToObjects() {
 
-		auto ev = Mod::get()->getSettingValue<bool>("dyn-ev");
+		auto ev = getSwitchValue("dyn-ev");
 
 		if (!ev) return;
 
@@ -132,7 +256,7 @@ class $modify(SetupSFXPopup) {
 
      void applyChangesToObjects() {
 		
-		auto sfx = Mod::get()->getSettingValue<bool>("dyn-sfx");
+		auto sfx = getSwitchValue("dyn-sfx");
 
 		if (!sfx) return;
 
@@ -179,16 +303,16 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 	void customSetup() {
 		EffectGameObject::customSetup();
 
-		auto defalt = Mod::get()->getSettingValue<bool>("do-default");
-		auto logic = Mod::get()->getSettingValue<bool>("do-logic");
-		auto shader = Mod::get()->getSettingValue<bool>("do-shader");
-		auto area = Mod::get()->getSettingValue<bool>("do-area");
-		auto colis = Mod::get()->getSettingValue<bool>("do-colis");
-		auto ccolor = Mod::get()->getSettingValue<bool>("color-cam");
-		auto cam = Mod::get()->getSettingValue<bool>("do-cam");
-		auto startp = Mod::get()->getSettingValue<bool>("new-start");
-		auto cstop = Mod::get()->getSettingValue<bool>("color-stop");
-		auto shakep = Mod::get()->getSettingValue<bool>("new-shake");
+		auto defalt = getSwitchValue("do-default");
+        auto logic = getSwitchValue("do-logic");
+        auto shader = getSwitchValue("do-shader");
+        auto area = getSwitchValue("do-area");
+        auto colis = getSwitchValue("do-colis");
+        auto ccolor = getSwitchValue("color-cam");
+        auto cam = getSwitchValue("do-cam");
+        auto startp = getSwitchValue("new-start");
+        auto cstop = getSwitchValue("color-stop");
+        auto shakep = getSwitchValue("new-shake");
 
 		if (shader == true)
 		switch(m_objectID){
@@ -638,5 +762,41 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 			setTexture(newSpr->getTexture());
 			setTextureRect(newSpr->getTextureRect());
 		}
+	}
+
+	void setCombinedIcon(MyEffectGameObject* obj, const char* tex1, const char* tex2) {
+		if (!obj) return;
+
+		auto spr1 = CCSprite::create(tex1);
+		auto spr2 = CCSprite::create(tex2);
+		if (!spr1 || !spr2) return;
+
+		auto size1 = spr1->getContentSize();
+		auto size2 = spr2->getContentSize();
+
+		float width  = std::max(size1.width,  size2.width);
+		float height = std::max(size1.height, size2.height);
+
+		auto rt = CCRenderTexture::create(width, height);
+		if (!rt) return;
+
+		spr1->setAnchorPoint({0.f, 0.f});
+		spr2->setAnchorPoint({0.f, 0.f});
+		spr1->setPosition({0.f, 0.f});
+		spr2->setPosition({0.f, 0.f});
+
+		rt->beginWithClear(0, 0, 0, 0);
+		spr1->visit();
+		spr2->visit();
+		rt->end();
+
+		rt->getSprite()->setFlipY(true);
+
+		auto result = CCSprite::createWithTexture(rt->getSprite()->getTexture());
+		if (!result) return;
+
+		obj->m_addToNodeContainer = true;
+		obj->setTexture(result->getTexture());
+		obj->setTextureRect({0, 0, width, height});
 	}
 };

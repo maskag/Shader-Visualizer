@@ -1,4 +1,7 @@
 ## v1.3.1
+- Added *<cr>V</c><co>i</c><cy>S</c><cg>u</c><cj>A</c><cl>l</c><cb>I</c><cp>z</c><cr>E</c><co>r</c>* settings 😎
+
+## v1.3.1
 - Added new trigger textures (song, song edit, shake)
 - Added new settings:
   - Reset StartPos trigger texture

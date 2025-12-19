@@ -1,4 +1,4 @@
-# Trigger <cr>V</c><co>i</c><cy>s</c><cg>u</c><cj>a</c><cb>l</c><cl>i</c><cp>z</c><cr>e</c><co>r</c>
+# Trigger <cr>V</c><co>i</c><cy>s</c><cg>u</c><cj>a</c><cl>l</c><cb>i</c><cp>z</c><cr>e</c><co>r</c>
 **Enhances trigger visuals in the editor by replacing and dynamically updating their textures.**  
 > ![✳️](frame:GJ_sDownloadIcon_001.png) <cg>*Don't forget about settings to control which trigger categories and dynamic effects are applied.*</c>
 
