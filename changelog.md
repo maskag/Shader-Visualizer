@@ -1,3 +1,9 @@
+## v1.4.2
+- Added dynamic texture for Item Edit triggers.
+- Added two new settings for Item Edit textures.
+- Updated some trigger textures.
+- Dynamic button now disappears during Playtest.
+
 ## v1.4.0
 - Added new dynamic textures:
   - UI trigger

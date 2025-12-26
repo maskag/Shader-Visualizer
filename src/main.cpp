@@ -15,6 +15,8 @@
 	#include <Geode/binding/ItemTriggerGameObject.hpp>
 	#include "cocos2d.h"
 	#include <Geode/binding/UISettingsGameObject.hpp>
+	#include <Geode/modify/LevelEditorLayer.hpp>
+	#include <Geode/binding/PlatformToolbox.hpp>
 
 	using namespace geode::prelude;
 
@@ -680,7 +682,6 @@ public:
         if (menu) {
             auto baseSpr = CCSprite::create("dynamicoff.png"_spr);
             if (baseSpr) {
-                // Индикатор включённости
                 auto onSpr = CCSprite::create("dynamicon.png"_spr);
                 if (onSpr) {
                     onSpr->setPosition(baseSpr->getContentSize() / 2);
@@ -691,12 +692,11 @@ public:
 
                 baseSpr->setScale(0.6f);
 
-                // Создаём кнопку с callback напрямую
                 auto btn = CCMenuItemSpriteExtra::create(
-                    baseSpr,           // нормальный спрайт
-                    nullptr,           // спрайт для отключённого состояния
-                    this,              // target
-                    menu_selector(ShowDynamic::onButton) // callback
+                    baseSpr,           
+                    nullptr,          
+                    this,             
+                    menu_selector(ShowDynamic::onButton) 
                 );
 
                 btn->setID("dynamic-button");
@@ -711,6 +711,26 @@ public:
 
         return true;
     }
+
+	void onPlaytest(CCObject* sender) {
+		if (auto menu = this->getChildByID("undo-menu")) {
+			if (auto btn = menu->getChildByID("dynamic-button")) {
+				btn->setVisible(false);
+			}
+    	}
+
+		EditorUI::onPlaytest(sender);
+	}
+
+	void onStopPlaytest(CCObject* sender) {
+		if (auto menu = this->getChildByID("undo-menu")) {
+			if (auto btn = menu->getChildByID("dynamic-button")) {
+				btn->setVisible(true);
+			}
+		}
+
+		EditorUI::onStopPlaytest(sender);
+	}
 
     void resetDynamicIcons() {
         auto lel = LevelEditorLayer::get();
@@ -728,6 +748,7 @@ public:
             switch (obj->m_objectID) {
                 case 3602: obj->setIcon("sfx.png"_spr); break;
                 case 3604: obj->setIcon("ev.png"_spr); break;
+				case 3619: obj->setIcon("edit.png"_spr); break;
                 case 3620: obj->setIcon("comp.png"_spr); break;
                 case 3613: obj->setIcon("ui.png"_spr); break;
                 default: break;
@@ -746,6 +767,8 @@ public:
         bool sfxEnabled = getSwitchValue("dyn-sfx");
         bool compEnabled = getSwitchValue("dyn-comp");
         bool uiEnabled  = getSwitchValue("dyn-ui");
+		bool editEnabled  = getSwitchValue("dyn-edit");
+		bool dotedit  = getSwitchValue("dot-edit");
 
         for (int i = 0; i < arr->count(); i++) {
             auto baseObj = static_cast<EffectGameObject*>(arr->objectAtIndex(i));
@@ -766,8 +789,12 @@ public:
                 if (compEnabled) updateCompTexture(typeinfo_cast<ItemTriggerGameObject*>(obj));
                 else obj->setIcon("comp.png"_spr);
             }
+			if (obj->m_objectID == 3619) {
+                if (compEnabled) updateEditTexture(typeinfo_cast<ItemTriggerGameObject*>(obj), dotedit);
+                else obj->setIcon("edit.png"_spr);
+            }
             if (obj->m_objectID == 3613) {
-                if (uiEnabled) updateUiTexture(typeinfo_cast<UISettingsGameObject*>(obj));
+                if (editEnabled) updateUiTexture(typeinfo_cast<UISettingsGameObject*>(obj));
                 else obj->setIcon("ui.png"_spr);
             }
         }
@@ -805,7 +832,39 @@ public:
 			}
 		}
 
+	static void updateEditTexture(ItemTriggerGameObject* obj, bool dot) {
+		if (!obj) return;
 
+		float typen = obj->m_resultType1;
+
+		const char* tex = "edit.png"_spr;
+
+		if (typen == 4) {
+			tex = "edit4.png"_spr;
+		}
+		else if (typen == 3) {
+			if (dot) {
+				tex = "edit3d.png"_spr;
+			}
+			else {
+				tex = "edit3a.png"_spr;
+			}
+		}
+		else if (typen == 2) {
+			tex = "edit2.png"_spr;
+		}
+		else if (typen == 1) {
+			tex = "edit1.png"_spr;
+		}
+		else if (typen == 0) {
+			tex = "edit0.png"_spr;
+		}
+
+		if (auto spr = CCSprite::create(tex)) {
+			obj->setTexture(spr->getTexture());
+			obj->setTextureRect(spr->getTextureRect());
+		}
+	}
 
 	static void updateUiTexture(UISettingsGameObject* obj) {
 		if (!obj) return;
@@ -951,8 +1010,6 @@ public:
         obj->setTextureRect({0, 0, w, h});
     }
 
-
-
     static void updateSFXTexture(SFXTriggerGameObject* obj) {
         if (!obj) return;
 
@@ -977,6 +1034,8 @@ public:
     }
 };
 
+
+
 class $modify(SetupTriggerPopup) {
     void onClose(cocos2d::CCObject* sender) {
         this->applyChangesToObjects();
@@ -998,6 +1057,8 @@ class $modify(SetupTriggerPopup) {
         bool sfxEnabled = getSwitchValue("dyn-sfx");
 		bool compEnabled = getSwitchValue("dyn-comp");
 		bool uiEnabled = getSwitchValue("dyn-ui");
+		bool editEnabled = getSwitchValue("dyn-edit");
+		bool dotedit = getSwitchValue("dot-edit");
 
         for (int i = 0; i < arr->count(); i++) {
             auto obj = static_cast<EffectGameObject*>(arr->objectAtIndex(i));
@@ -1018,8 +1079,47 @@ class $modify(SetupTriggerPopup) {
 			if (uiEnabled && obj->m_objectID == 3613) {
                 updateUiTexture(typeinfo_cast<UISettingsGameObject*>(obj));
             }
+
+			if (editEnabled && obj->m_objectID == 3619) {
+                updateEditTexture(typeinfo_cast<ItemTriggerGameObject*>(obj), dotedit);
+            }
         }
     }
+
+	static void updateEditTexture(ItemTriggerGameObject* obj, bool dot) {
+		if (!obj) return;
+
+		float typen = obj->m_resultType1;
+
+		const char* tex = "edit.png"_spr;
+
+		if (typen == 4) {
+			tex = "edit4.png"_spr;
+		}
+		else if (typen == 3) {
+			if (dot) {
+				tex = "edit3d.png"_spr;
+			}
+			else {
+				tex = "edit3a.png"_spr;
+			}
+		}
+		else if (typen == 2) {
+			tex = "edit2.png"_spr;
+		}
+		else if (typen == 1) {
+			tex = "edit1.png"_spr;
+		}
+		else if (typen == 0) {
+			tex = "edit0.png"_spr;
+		}
+
+		if (auto spr = CCSprite::create(tex)) {
+			obj->setTexture(spr->getTexture());
+			obj->setTextureRect(spr->getTextureRect());
+		}
+	}
+
 	static void updateUiTexture(UISettingsGameObject* obj) {
 		if (!obj) return;
 
@@ -1184,7 +1284,6 @@ class $modify(SetupTriggerPopup) {
         obj->setTextureRect({0, 0, w, h});
     }
 
-    // SFX
     static void updateSFXTexture(SFXTriggerGameObject* obj) {
         if (!obj) return;
 
@@ -1208,3 +1307,4 @@ class $modify(SetupTriggerPopup) {
         }
     }
 };
+

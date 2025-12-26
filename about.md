@@ -20,6 +20,7 @@ Dynamic textures are now available for:
 - Event triggers
 - UI triggers
 - Item comp triggers
+- item edit triggers
 
 These updates make trigger types easier to identify and manage, especially in complex levels.
 

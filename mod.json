@@ -8,7 +8,7 @@
 	},
 	"id": "maskagd.shader_visualizer",
 	"name": "Trigger Visualizer",
-	"version": "v1.4.0",
+	"version": "v1.4.2",
 	"developer": "maskagd",
 	"description": "Trigger Visualizer",
 	"resources": {
@@ -20,6 +20,13 @@
         "source": "https://github.com/maskag/Shader-Visualizer"
     },
 	"tags": ["editor", "offline", "customization"],
+    "dependencies": [
+		{
+			"id": "geode.node-ids",
+			"version": ">=1.12.1",
+			"importance": "required"
+		}
+	],
 	"settings": {
         "set-title": {
             "type": "title",
@@ -128,6 +135,22 @@
             "default": true,
             "spr1": "comp.png",
             "spr2": "comp5.png"
+        },
+        "dyn-edit": {
+            "type": "custom:maskagd.shader_visualizer/sprite-switch",
+            "name": "Item comp dynamic texture",
+            "description": "Select style",
+            "default": true,
+            "spr1": "edit.png",
+            "spr2": "edit1.png"
+        },
+        "dot-edit": {
+            "type": "custom:maskagd.shader_visualizer/sprite-switch",
+            "name": "Multiplication sign",
+            "description": "Choose dot or star to represent multiplication in item edit",
+            "default": true,
+            "spr1": "edit3a.png",
+            "spr2": "edit3d.png"
         },
         "dyn-ev": {
             "type": "custom:maskagd.shader_visualizer/sprite-switch",
