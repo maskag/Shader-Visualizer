@@ -342,6 +342,18 @@
 				case 3605: {
 					setIcon("editsong.png"_spr);
 					break;
+				}
+				case 3029: {
+					setIcon("bgc.png"_spr);
+					break;
+				} 
+				case 3030: {
+					setIcon("gc.png"_spr);
+					break;
+				} 
+				case 3031: {
+					setIcon("mgc.png"_spr);
+					break;
 				} 
 			}
 			
@@ -963,6 +975,7 @@ public:
                 else if (id == 72) addTex("evlef.png"_spr, "evlefs.png"_spr);
                 else if (id == 73) addTex("evright.png"_spr, "evrights.png"_spr);
                 else if (id == 74) addTex("evrig.png"_spr, "evrigs.png"_spr);
+				else if (id == 75) addTex("evreverse.png"_spr, "evreverses.png"_spr);
                 else if (id == 60 || id == 64) addTex("evsave.png"_spr, "evsaves.png"_spr);
                 else if ((id >= 26 && id <= 33) || (id >= 50 && id <= 59)) addTex("evportal.png"_spr, "evportals.png"_spr);
                 else addTex("ev.png"_spr, "evs.png"_spr);
@@ -1237,6 +1250,7 @@ class $modify(SetupTriggerPopup) {
                 else if (id == 72) addTex("evlef.png"_spr, "evlefs.png"_spr);
                 else if (id == 73) addTex("evright.png"_spr, "evrights.png"_spr);
                 else if (id == 74) addTex("evrig.png"_spr, "evrigs.png"_spr);
+				else if (id == 75) addTex("evreverse.png"_spr, "evreverses.png"_spr);
                 else if (id == 60 || id == 64) addTex("evsave.png"_spr, "evsaves.png"_spr);
                 else if ((id >= 26 && id <= 33) || (id >= 50 && id <= 59)) addTex("evportal.png"_spr, "evportals.png"_spr);
                 else addTex("ev.png"_spr, "evs.png"_spr);
