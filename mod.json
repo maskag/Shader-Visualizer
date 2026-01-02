@@ -17,7 +17,8 @@
 		]
 	},
 	"links": {
-        "source": "https://github.com/maskag/Shader-Visualizer"
+        "source": "https://github.com/maskag/Shader-Visualizer",
+        "homepage": "https://www.youtube.com/@maskagd"
     },
 	"tags": ["editor", "offline", "customization"],
 
@@ -120,6 +121,22 @@
         "dynamic-title": {
             "type": "title",
             "name": "dynamic texture settings"
+        },
+        "dyn-start": {
+            "type": "custom:maskagd.shader_visualizer/sprite-switch",
+            "name": "StartPos dynamic texture",
+            "description": "Select style",
+            "default": true,
+            "spr1": "start.png",
+            "spr2": "startprev.png"
+        },
+        "dyn-cam": {
+            "type": "custom:maskagd.shader_visualizer/sprite-switch",
+            "name": "Cameras dynamic texture",
+            "description": "Select style",
+            "default": true,
+            "spr1": "offset.png",
+            "spr2": "offsetX.png"
         },
         "dyn-ui": {
             "type": "custom:maskagd.shader_visualizer/sprite-switch",

@@ -1,3 +1,17 @@
+# v1.6.0
+## Dynamic Performance & Texture System Update
+- Added **dynamic texture for StartPos** with **~2300 unique variations** depending on settings and context.
+- Added **dynamic textures for Camera triggers**, reacting to their parameters.
+- **Updated collision block textures** with clearer visuals and better editor readability.
+- **Major code optimization**:
+  - Reduced editor draw calls.
+  - Optimized dynamic texture evaluation logic.
+  - Lower memory usage for texture caching.
+- General **code cleanup and refactoring** for better maintainability and stability.
+- Added **FPS monitoring system**:
+  - The mod now detects low FPS situations.
+  - Displays a warning suggesting disabling certain dynamic textures to improve performance.
+
 # v1.5.0
 ## Visual Refresh Update
 - Added 5 completely new trigger sprites.

@@ -16,11 +16,12 @@ Originally focused on shader triggers, it now supports a wide range of default t
 
 Dynamic textures are now available for:
 
-- SFX triggers
-- Event triggers
-- UI triggers
-- Item comp triggers
-- item edit triggers
+- SFX trigger
+- Event trigger
+- UI trigger
+- Item triggers
+- Camera triggers
+- StartPos trigger
 
 These updates make trigger types easier to identify and manage, especially in complex levels.
 
