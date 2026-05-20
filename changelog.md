@@ -1,23 +1,45 @@
-# v2.2.3
+# <cg>v3.0.0-beta.1</c>
+## Trigger Labels Expansion & Refactoring
+- Expanded **trigger label support**
+  - Some triggers that previously had no numbers now display IDs directly on them
+  - Added support for:
+    - Event Trigger -> target groups
+    - UI Trigger -> group ID
+    - Static Camera Trigger -> target group
+    - Time / Time Event / Time Control -> item ID
+    - Song / Song Edit -> channel
+  - More triggers will receive support in future updates
+- Reworked and simplified **settings**
+  - Removed unnecessary options
+  - Cleaner organization
+- Massive **code refactoring**
+  - Cleaner and more maintainable codebase
+  - Better folder structure
+  - Improved namespace organization
+- Updated **logo**
+- Updated **mod description**
+- Various minor improvements and fixes
+
+# <cj>v2.2.3</c>
 ## New logo (ignore patch 3)
-- new **logo**
+- New **logo**
 - Fixed **Radial blur name** (Radical blur)
 - Fixed a bug where the game could **crash when copying multiple objects**
 
-# v2.2.2
-## New logo (ignore patch 2)s
+# <cj>v2.2.2</c>
+## New logo (ignore patch 2)
 - New **logo** (again)
 - Small changes
 - Updated **mod description**
 - Fixed some **trigger sprite**
 
-# v2.2.1
+# <cj>v2.2.1</c>
 ## Visual Refresh Patch
 - Redrew **shader trigger sprites**
 - New **logo**
 - Updated **mod description**
 
-# v2.2.0
+# <cb>v2.2.0</c>
 ## Dynamic Texture Expansion & Improvements
 - Added **new dynamic textures for Area triggers**
 - Added **4 new trigger textures**
@@ -26,7 +48,7 @@
 - Updated **mod description**
 - Fixed various **bugs and issues**
 
-# v2.1.0
+# <cb>v2.1.0</c>
 ## Dynamic Texture & Settings Update
 - Added **two new dynamic textures**
   - Pulse trigger - displays its color
@@ -38,12 +60,12 @@
 - Fixed an **iOS startup issue** where the game would not launch with the mod enabled
 - Various minor fixes and tweaks
 
-# v2.0.1
+# <cl>v2.0.1</c>
 ## Mini patch
 - Added one dynamic texture (stop trigger)
 - Small changes in the code
 
-# v2.0.0
+# <cp>v2.0.0</c>
 ## Massive Visual & Performance Update
 - Reworked **131 trigger textures** to match original trigger resolutions  
   (near 1:1 accuracy with vanilla sizing)
@@ -68,11 +90,11 @@
 - Updated Geode to the latest version
 - Added support for game version **2.2081**
 
-# v1.6.1
+# <cl>v1.6.1</c>
 ## Micro patch
 - FPS message now appears **only once**
 
-# v1.6.0
+# <cb>v1.6.0</c>
 ## Dynamic Performance & Texture System Update
 - Added **dynamic texture for StartPos** with ~2300 unique variations depending on settings and context
 - Added **dynamic textures for Camera triggers**, reacting to their parameters
@@ -86,21 +108,21 @@
   - Detects low FPS situations
   - Displays a warning suggesting disabling certain dynamic textures
 
-# v1.5.0
+# <cb>v1.5.0</c>
 ## Visual Refresh Update
 - Added **5 completely new trigger sprites**
 - Updated and replaced **25 old trigger sprites**
 - Improved overall visual consistency between trigger categories
 - Minor tweaks to sprite alignment and scaling in the editor
 
-# v1.4.2
+# <cl>v1.4.2</c>
 ## Editor Interaction Fixes & Tweaks
 - Added **dynamic texture for Item Edit triggers**
 - Added **two new settings** for Item Edit textures
 - Updated some trigger textures
 - Dynamic button now disappears during Playtest
 
-# v1.4.0
+# <cb>v1.4.0</c>
 ## Dynamic Texture Expansion
 - Added new dynamic textures
   - UI trigger
@@ -110,16 +132,16 @@
   - Enable UI dynamic texture
 - Added a button in the editor to **toggle dynamic textures**
 
-# v1.3.3
+# <cl>v1.3.3</c>
 ## Smart Event Composition
 - Added a new feature: **automatic texture combining** for Event triggers with multiple actions
 - Added a new setting to enable or configure this behavior
 
-# v1.3.2
+# <cl>v1.3.2</c>
 ## Visual Settings Overhaul
 - Added **Visual settings** section
 
-# v1.3.1
+# <cl>v1.3.1</c>
 ## Trigger Sprite Settings
 - Added new trigger textures
   - Song
@@ -130,7 +152,7 @@
   - Reset Shake trigger texture
   - Reset Area Stop trigger texture
 
-# v1.30
+# <cb>v1.3.0</c>
 ## Dynamic Behavior Update
 - Added **dynamic texture updates** for SFX and Event triggers
   - SFX textures now change depending on volume
@@ -139,13 +161,13 @@
   - Added **volume threshold setting** for SFX triggers
 - Added several new textures for triggers that previously had no custom visuals
 
-# v1.20
+# <cb>v1.2.0</c>
 ## Camera & Visual Additions
 - Added new **Camera trigger texture**
 - Added several new trigger textures
 - Added new settings
 
-# v1.10
+# <cb>v1.1.0</c>
 ## Trigger Visualizer
 - Added new trigger textures
   - Gameplay triggers
@@ -156,10 +178,10 @@
 - Fixed shader trigger icon offset in the editor
 - Improved overall editor visual clarity
 
-# v1.0.1
+# <cl>v1.0.1</c>
 ## Platform Compatibility Patch
 - **Cross-platform release**
 
-# v1.0.0
+# <cp>v1.0.0</c>
 ## Shader Visualizer
 - Initial release

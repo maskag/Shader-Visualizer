@@ -1,11 +1,11 @@
-#include "Utils.hpp"
+#include "dynamic/dynamic.hpp"
 #include <Geode/loader/SettingV3.hpp>
 #include <Geode/loader/Mod.hpp>
+#include <Geode/loader/Log.hpp>
 
 using namespace geode::prelude;
 
 
-// custom settings (only custom settings (maybe (if I’m not lying (but I’m not lying (maybe)))))
 class SpriteSwitchSettingV3 : public SettingBaseValueV3<bool> {
 public:
     std::string m_spr1;
@@ -24,18 +24,26 @@ public:
 
 class SpriteSwitchNodeV3 : public SettingValueNodeV3<SpriteSwitchSettingV3> {
 protected:
+    static std::string resolveSettingSprite(std::string const& key) {
+        auto resolved = key;
+        if (!resolved.empty()) {
+            return resolved;
+        }
+        return key;
+    }
+
     bool init(std::shared_ptr<SpriteSwitchSettingV3> setting, float width) {
         if (!SettingValueNodeV3::init(setting, width)) return false;
 
         auto menu = this->getButtonMenu();
         menu->removeAllChildren();
 
-        auto btn1Spr = createIconSprite(setting->m_spr1);
+        auto btn1Spr = texture::createRawSprite(resolveSettingSprite(setting->m_spr1));
         btn1Spr->setScale(0.6f);
         auto btn1 = CCMenuItemSpriteExtra::create(btn1Spr, this, menu_selector(SpriteSwitchNodeV3::onSelectFalse));
         btn1->setTag(0);
 
-        auto btn2Spr = createIconSprite(setting->m_spr2);
+        auto btn2Spr = texture::createRawSprite(resolveSettingSprite(setting->m_spr2));
         btn2Spr->setScale(0.6f);
         auto btn2 = CCMenuItemSpriteExtra::create(btn2Spr, this, menu_selector(SpriteSwitchNodeV3::onSelectTrue));
         btn2->setTag(1);

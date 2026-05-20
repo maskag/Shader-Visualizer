@@ -10,13 +10,9 @@ else()
 endif()
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
-project(triggervisualizer VERSION 2.0.0)
+project(triggervisualizer VERSION 3.0.0)
 
-set(SOURCES
-    src/main.cpp
-    src/Settings.cpp
-    src/TextureLogic.cpp
-)
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
