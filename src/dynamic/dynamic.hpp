@@ -15,13 +15,12 @@ namespace dynamic {
         float offEv;
     };
 
-    extern bool g_isToolboxInit;
-
     Settings getSettings();
     void applyUpdates(EffectGameObject* obj, const Settings& settings);
 
     void updateCompTexture(ItemTriggerGameObject* obj);
     void updateEditTexture(ItemTriggerGameObject* obj, bool dot);
+    void updatePersTexture(ItemTriggerGameObject* obj);
 
     void updateAreaTexture(EnterEffectObject* obj);
 

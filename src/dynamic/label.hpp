@@ -9,7 +9,8 @@ using namespace geode::prelude;
 namespace TLabel {
     enum class Variant {
         Standard,
-        Badge
+        Badge,
+        ItemBadge
     };
 
     // Create a text on trigger

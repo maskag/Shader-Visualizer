@@ -121,6 +121,14 @@ namespace dynUtils {
 
 namespace cacheUtils {
 
+    bool isLevelObject(GameObject* obj) {
+        auto layer = LevelEditorLayer::get();
+        return obj &&
+            layer &&
+            layer->m_objects &&
+            layer->m_objects->containsObject(obj);
+    }
+
     bool isDynamicColorTriggerID(int objectID) {
         switch (objectID) {
             case 899:

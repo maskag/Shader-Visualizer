@@ -1,3 +1,12 @@
+# <cg>v3.0.0-beta.2</c>
+## Bug Fixes
+- Fixed a crash when **closing the MG2 color popup** with **Better Touch Prio** installed
+- Fixed dynamic textures being applied to trigger groups added by the **Object Groups** mod
+- Added **new labels** 
+  - Item Comp
+  - Item Edit
+  - Item Pers
+
 # <cg>v3.0.0-beta.1</c>
 ## Trigger Labels Expansion & Refactoring
 - Expanded **trigger label support**

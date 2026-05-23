@@ -54,6 +54,7 @@ namespace cache {
         Sfx,
         Comp,
         Edit,
+        Pers,
         Ui,
         Start,
         Stop,
@@ -86,6 +87,7 @@ namespace cache {
     CacheSig sigSfx(EffectGameObject* obj, const Settings& settings);
     CacheSig sigComp(EffectGameObject* obj, const Settings& settings);
     CacheSig sigEdit(EffectGameObject* obj, const Settings& settings);
+    CacheSig sigPers(EffectGameObject* obj, const Settings& settings);
     CacheSig sigUi(EffectGameObject* obj, const Settings& settings);
     CacheSig sigStart(EffectGameObject* obj, const Settings& settings);
     CacheSig sigStopTexture(EffectGameObject* obj, const Settings& settings);
@@ -116,6 +118,7 @@ namespace cache {
 namespace cacheUtils {
     using Settings = dynamic::Settings;
 
+    bool isLevelObject(GameObject* obj);
     bool isDynamicColorTriggerID(int objectID);
     bool settingsEqual(const Settings& a, const Settings& b);
 }

@@ -4,23 +4,27 @@
 ## About
 Trigger Visualizer replaces default trigger textures with clearer visuals that **represent trigger behavior directly in the editor**
 
-Instead of generic icons, triggers now visually indicate **what they do**, making complex setups easier to understand at a glance
+Many triggers also **display important values** directly on themselves
 
-The mod also supports **dynamic textures**, meaning some triggers **change their appearance based on their settings**
-This allows you to see key parameters without opening the edit menu
+Some triggers use **dynamic textures**, meaning they update their appearance based on settings, allowing important information to be visible without opening the edit menu
 
-The mod also includes **Old Color trigger sprites support**, improving compatibility with older levels
+The mod also includes **Old Color trigger sprite support**, improving compatibility with older levels
 
 ---
 
-## Additionally
-- **104 trigger types modified**
-- **245 custom textures included**
-- **24 triggers support dynamic textures**
+## Features
+- **11 triggers with label support**
+    - Event, UI, Static Camera
+    - Time, Time Event, Time Control
+    - Item Comp, Item Edit, Item Pers
+    - Song, Song Edit
+- **25 triggers with dynamic textures**
+    - Item triggers, Collision, Spawn, Event
+    - Move, Rotate, Color, Pulse, Gravity, StartPos
+    - Area triggers, Camera triggers, UI, SFX
 
 ---
 
 ## Notes
 - Affects **editor visuals only**
 - Does **not** change gameplay
-- Designed for better clarity, faster building, and easier debugging

@@ -2,8 +2,6 @@
 #include "cache.hpp"
 
 namespace dynamic {
-    bool g_isToolboxInit = false;
-
     Settings getSettings() {
         Settings settings;
         settings.logic = getSwitchValue("dyn-logic");

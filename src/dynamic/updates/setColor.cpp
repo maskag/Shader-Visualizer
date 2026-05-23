@@ -1,6 +1,7 @@
 #include "../dynamic.hpp"
 #include "../cache.hpp"
 
+
 void dynamic::updateColorTexture(EffectGameObject* obj) {
     if (!obj) return;
     auto color = dynUtils::getColorTriggerTint(obj);

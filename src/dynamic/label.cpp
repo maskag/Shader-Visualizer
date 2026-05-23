@@ -54,6 +54,9 @@ namespace TLabel {
         if (var == Variant::Badge) {
             return {4.f, 4.f};
         }
+        if (var == Variant::ItemBadge) {
+            return {7.f, 13.f};
+        }
         return {16.5f, 11.5f};
     }
 
@@ -64,7 +67,10 @@ namespace TLabel {
         if (var == Variant::Badge) {
             return 0.35f;
         }
-        return 0.35f;
+        if (var == Variant::ItemBadge) {
+            return 0.35f;
+        }
+        return 0.5f;
     }
 
     float getMaxWidth(Variant var) {
@@ -72,6 +78,9 @@ namespace TLabel {
             return 30.f;
         }
         if (var == Variant::Badge) {
+            return 21.f;
+        }
+        if (var == Variant::ItemBadge) {
             return 21.f;
         }
         return 30.f;

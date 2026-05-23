@@ -76,7 +76,7 @@ class $modify(MyEffectGameObject, EffectGameObject) {
             }
         }
 
-       if (!dynamic::g_isToolboxInit && s_dynamicReady && getSwitchValue("dyn-enable")) {
+       if (s_dynamicReady && getSwitchValue("dyn-enable")) {
             auto ds = dynamic::getSettings();
             cache::applyUpdatesCached(this, ds);
         }
@@ -86,14 +86,9 @@ class $modify(MyEffectGameObject, EffectGameObject) {
 // dynamic texture apply (create, copy...)
 class $modify(ShowDynamic, EditorUI) {
     bool init(LevelEditorLayer* editorlayer) {
-        dynamic::g_isToolboxInit = true;
-        
         if (!EditorUI::init(editorlayer)) {
-            dynamic::g_isToolboxInit = false;
             return false;
         }
-
-        dynamic::g_isToolboxInit = false;
 
         if (!isModEnabled()) {
             s_dynamicReady = false;
@@ -179,49 +174,67 @@ $execute {
 
 class $modify(MySetupTriggerPopup, SetupTriggerPopup) {
     void onClose(cocos2d::CCObject* sender) {
+        Ref<EffectGameObject> gameObject = this->m_gameObject;
+        Ref<CCArray> gameObjects = this->m_gameObjects;
+
         SetupTriggerPopup::onClose(sender); 
         if (!isModEnabled()) {
             return;
         }
         
-        cache::markDirty(this->m_gameObject);
-        cache::markDirty(this->m_gameObjects);
+        cache::markDirty(gameObject);
+        cache::markDirty(gameObjects);
         cache::applyChangesGlobal();
     }
 };
 
 class $modify(MySetupCameraOffsetTrigger, SetupCameraOffsetTrigger) {
     void onClose(cocos2d::CCObject* sender) {
+        Ref<EffectGameObject> gameObject = this->m_gameObject;
+        Ref<CCArray> gameObjects = this->m_gameObjects;
+
         SetupCameraOffsetTrigger::onClose(sender);
         if (!isModEnabled()) {
             return;
         }
 
-        cache::markDirty(this->m_gameObject);
-        cache::markDirty(this->m_gameObjects);
+        cache::markDirty(gameObject);
+        cache::markDirty(gameObjects);
         cache::applyChangesGlobal();
     }
 };
 
 class $modify(MyColorSelectPopup, ColorSelectPopup) {
-    void applyColorPopupDynamicUpdate() {
+    static void applyColorPopupDynamicUpdate(
+        EffectGameObject* gameObject,
+        CCArray* gameObjects,
+        CCArray* colorObjects
+    ) {
         if (!isModEnabled()) {
             return;
         }
-        cache::markDirty(this->m_gameObject);
-        cache::markDirty(this->m_gameObjects);
-        cache::markDirty(this->m_colorObjects);
+        cache::markDirty(gameObject);
+        cache::markDirty(gameObjects);
+        cache::markDirty(colorObjects);
         cache::applyChangesGlobal();
     }
 
     void onClose(cocos2d::CCObject* sender) {
+        Ref<EffectGameObject> gameObject = this->m_gameObject;
+        Ref<CCArray> gameObjects = this->m_gameObjects;
+        Ref<CCArray> colorObjects = this->m_colorObjects;
+
         ColorSelectPopup::onClose(sender);
-        applyColorPopupDynamicUpdate();
+        applyColorPopupDynamicUpdate(gameObject, gameObjects, colorObjects);
     }
 
     void closeColorSelect(cocos2d::CCObject* sender) {
+        Ref<EffectGameObject> gameObject = this->m_gameObject;
+        Ref<CCArray> gameObjects = this->m_gameObjects;
+        Ref<CCArray> colorObjects = this->m_colorObjects;
+
         ColorSelectPopup::closeColorSelect(sender);
-        applyColorPopupDynamicUpdate();
+        applyColorPopupDynamicUpdate(gameObject, gameObjects, colorObjects);
     }
 };
 

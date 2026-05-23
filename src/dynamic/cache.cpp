@@ -27,6 +27,7 @@ namespace cache {
             {3602, dynUtils::dynGame, sigSfx, Action::Sfx},
             {3620, dynUtils::dynLogic, sigComp, Action::Comp},
             {3619, dynUtils::dynLogic, sigEdit, Action::Edit},
+            {3641, dynUtils::dynLogic, sigPers, Action::Pers},
             {3613, dynUtils::dynLogic, sigUi, Action::Ui},
             {31, dynUtils::dynGame, sigStart, Action::Start},
             {1616, dynUtils::dynLogic, sigStopTexture, Action::Stop},
@@ -86,6 +87,9 @@ namespace cache {
                 break;
             case Action::Edit:
                 dynamic::updateEditTexture(typeinfo_cast<ItemTriggerGameObject*>(obj), s.dotEdit);
+                break;
+            case Action::Pers:
+                dynamic::updatePersTexture(typeinfo_cast<ItemTriggerGameObject*>(obj));
                 break;
             case Action::Ui:
                 dynamic::updateUiTexture(typeinfo_cast<UISettingsGameObject*>(obj));
@@ -147,6 +151,10 @@ namespace cache {
 
     void applyUpdatesCached(EffectGameObject* obj, const dynamic::Settings& s) {
         if (!obj) {
+            return;
+        }
+        if (!cacheUtils::isLevelObject(obj)) {
+            g_cache.erase(obj);
             return;
         }
 

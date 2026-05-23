@@ -1,5 +1,6 @@
 #include "../dynamic.hpp"
 #include "../cache.hpp"
+#include "../label.hpp"
 #include <Geode/binding/CountTriggerGameObject.hpp>
 #include <Geode/binding/ItemTriggerGameObject.hpp>
 
@@ -44,6 +45,11 @@ void dynamic::updateCompTexture(ItemTriggerGameObject* obj) {
         case 1: tex = texture::sprite("comp_gt"); break;
         case 0: tex = texture::sprite("comp_eq"); break;
     }
+
+    if (!TLabel::setValue(obj, obj->m_targetGroupID, TLabel::Variant::ItemBadge)) {
+        return;
+    }
+
     texture::setObjIcon(obj, tex);
 }
 
@@ -57,7 +63,20 @@ void dynamic::updateEditTexture(ItemTriggerGameObject* obj, bool) {
         case 1: tex = texture::sprite("edit_add"); break;
         case 0: tex = texture::sprite("edit_set"); break;
     }
+
+    if (!TLabel::setValue(obj, obj->m_targetGroupID, TLabel::Variant::ItemBadge)) {
+        return;
+    }
+
     texture::setObjIcon(obj, tex);
+}
+
+void dynamic::updatePersTexture(ItemTriggerGameObject* obj) {
+    if (!obj) return;
+
+    if (!TLabel::setValue(obj, obj->m_itemID, TLabel::Variant::ItemBadge)) {
+        return;
+    }
 }
 
 namespace cache {
@@ -87,12 +106,43 @@ namespace cache {
     CacheSig sigComp(EffectGameObject* obj, const Settings&) {
         auto item = typeinfo_cast<ItemTriggerGameObject*>(obj);
         if (!item) return {};
-        return {obj->m_objectID, item->m_resultType3 + 1};
+
+        CacheSig sig {obj->m_objectID};
+
+        if (TLabel::getValue(item) != item->m_targetGroupID) {
+            sig.add(item->m_targetGroupID);
+        }
+
+        sig.add(item->m_resultType3 + 1);
+
+        return sig;
     }
 
     CacheSig sigEdit(EffectGameObject* obj, const Settings& s) {
         auto item = typeinfo_cast<ItemTriggerGameObject*>(obj);
         if (!item) return {};
-        return {obj->m_objectID, item->m_resultType1 + 1, s.dotEdit ? 1 : 0};
+
+        CacheSig sig {obj->m_objectID};
+
+        if (TLabel::getValue(item) != item->m_targetGroupID) {
+            sig.add(item->m_targetGroupID);
+        }
+
+        sig.add(item->m_resultType1 + 1);
+
+        return sig;
+    }
+
+    CacheSig sigPers(EffectGameObject* obj, const Settings&) {
+        auto item = typeinfo_cast<ItemTriggerGameObject*>(obj);
+        if (!item) return {};
+
+        CacheSig sig {obj->m_objectID};
+
+        if (TLabel::getValue(item) != item->m_itemID) {
+            sig.add(item->m_itemID);
+        }
+
+        return sig;
     }
 }
