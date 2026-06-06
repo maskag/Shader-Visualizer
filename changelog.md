@@ -8,6 +8,9 @@
 - Added two initial themes:
   - **Visualizer** - the usual Trigger Visualizer theme, which redesigned trigger icons
   - **Standard** - keeps the original Geometry Dash style while retaining supported dynamic texture behavior
+- This is **most likely the penultimate beta** before the **3.0.0 release**
+  - The remaining work is focused primarily on stability improvements and polishing
+  - Barring any major issues, the next update is expected to be the final beta before release 3.0.0
 
 # <cg>v3.0.0-beta.2</c>
 ## Bug Fixes
