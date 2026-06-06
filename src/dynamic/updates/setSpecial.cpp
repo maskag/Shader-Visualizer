@@ -68,7 +68,10 @@ void dynamic::updateStartTexture(StartPosObject* obj) {
         case 7: modeTex = "start_swing"; break;
     }
     auto sprMode = texture::createSprite(modeTex);
-    if (sprMode && settings->m_startMini) {
+    if (!sprMode) {
+        return;
+    }
+    if (settings->m_startMini) {
         sprMode->setScale(0.75f);
     }
 
@@ -82,13 +85,19 @@ void dynamic::updateStartTexture(StartPosObject* obj) {
         case 4: speedTex = "start_speed4"; break; 
     }
     auto sprSpeed = texture::createSprite(speedTex);
+    if (!sprSpeed) {
+        return;
+    }
 
     auto sprRot = texture::createSprite("start_path");
     if (sprRot) {
         if (settings->m_reverseGameplay) sprRot->setFlipX(true);
         sprRot->setFlipY(!settings->m_isFlipped);
     }
-
+    if (!sprRot) {
+        return;
+    }
+    
     float w = 50.f, h = 30.f;
     float cx = w / 2;
     float cy = h / 2; 

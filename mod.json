@@ -8,7 +8,7 @@
     },
     "id": "maskagd.shader_visualizer",
     "name": "Trigger Visualizer",
-    "version": "3.0.0-beta.2",
+    "version": "3.0.0-beta.3",
     "developer": "maskagd",
     "description": "Visually Enhances Triggers",
     "resources": {
@@ -26,6 +26,13 @@
         "global-title": {
             "type": "title",
             "name": "global settings"
+        },
+        "theme-selector": {
+            "type": "button",
+            "name": "Texture theme",
+            "buttons": {
+                "open": "Select Theme"
+            }
         },
         "new-triggers": {
             "type": "custom:maskagd.shader_visualizer/sprite-switch",

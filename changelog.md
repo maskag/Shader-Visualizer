@@ -1,3 +1,14 @@
+# <cg>v3.0.0-beta.3</c>
+## Theme System & Area Trigger Label
+- Added **label for Area triggers**
+- Added a new **texture theme system**
+  - Trigger Visualizer textures are no longer limited to a single visual style
+  - The texture resolver, previews, and dynamic textures now work with the selected theme
+  - Themes can be changed from the mod settings
+- Added two initial themes:
+  - **Visualizer** - the usual Trigger Visualizer theme, which redesigned trigger icons
+  - **Standard** - keeps the original Geometry Dash style while retaining supported dynamic texture behavior
+
 # <cg>v3.0.0-beta.2</c>
 ## Bug Fixes
 - Fixed a crash when **closing the MG2 color popup** with **Better Touch Prio** installed

@@ -28,3 +28,5 @@ The mod also includes **Old Color trigger sprite support**, improving compatibil
 ## Notes
 - Affects **editor visuals only**
 - Does **not** change gameplay
+
+

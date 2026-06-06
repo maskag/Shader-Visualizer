@@ -1,9 +1,14 @@
 #include "../dynamic.hpp"
 #include "../cache.hpp"
+#include "../label.hpp"
 #include <Geode/binding/EnterEffectObject.hpp>
 
 void dynamic::updateAreaTexture(EnterEffectObject* obj) {
     if (!obj) return;
+
+    if (!TLabel::setValue(obj, obj->m_targetGroupID, TLabel::Variant::Standard)) {
+        return;
+    }
 
     auto baseTex = dynUtils::getAreaTriggerBaseTexture(obj->m_objectID);
     auto sprBase = CCSprite::create(baseTex.c_str());
@@ -72,6 +77,13 @@ namespace cache {
         auto area = typeinfo_cast<EnterEffectObject*>(obj);
         if (!area) return {};
 
-        return {obj->m_objectID, dynUtils::getAreaBucket(obj)};
+        CacheSig sig {obj->m_objectID};
+
+        if (TLabel::getValue(area) != area->m_targetGroupID) {
+            sig.add(area->m_targetGroupID);
+        }
+
+        sig.add(dynUtils::getAreaBucket(obj));
+        return sig;
     }
 }

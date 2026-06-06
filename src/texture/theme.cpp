@@ -1,35 +1,41 @@
-#include "texture.hpp"
+#include "theme.hpp"
 
 using namespace geode::prelude;
 
 namespace theme {
 
     Themes getCurrentTheme() {
-        auto theme = Mod::get()->getSavedValue<std::string>("theme", "visualizer");
+        auto theme = Mod::get()->getSavedValue<int>(
+            "theme",
+            static_cast<int>(Themes::Visualizer)
+        );
 
-        if (theme == "visualizer") {
-            return Themes::Visualizer;
+        switch (theme) {
+            case static_cast<int>(Themes::Standard):
+                return Themes::Standard;
+
+            case static_cast<int>(Themes::Visualizer):
+            default:
+                return Themes::Visualizer;
         }
-
-        return Themes::Standard;
     }
 
     std::string getThemeKey(Themes key) {
         switch (key) {
             case Themes::Visualizer:
-                return "visualizer";
+                return "maskagd.";
 
             case Themes::Standard:
-                return "standard";
+                return "robtop.";
         }
 
-        return "visualizer";
+        return "maskagd.";
     }
 
     void changeTheme(Themes currentTheme) {
-        Mod::get()->setSavedValue<std::string>(
+        Mod::get()->setSavedValue<int>(
             "theme",
-            getThemeKey(currentTheme)
+            static_cast<int>(currentTheme)
         );
     }
 }

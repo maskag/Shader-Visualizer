@@ -1,3 +1,4 @@
+#include "theme.hpp"
 #include "texture.hpp"
 
 using namespace geode::prelude;
@@ -19,7 +20,7 @@ bool theme::SelectPopup::init() {
     
 
     // STANDARD theme
-    this->m_standardLabel = CCLabelBMFont::create("Standard by RobTop", "bigFont.fnt");
+    this->m_standardLabel = CCLabelBMFont::create("Standard", "bigFont.fnt");
     this->m_standardLabel->setScale(0.5f);
     this->m_mainLayer->addChildAtPosition(this->m_standardLabel, Anchor::Top, { 0.f, -40.f });
 
@@ -89,4 +90,10 @@ theme::SelectPopup* theme::SelectPopup::create() {
 
     delete ret;
     return nullptr;
+}
+
+void theme::showSelectPopup() {
+    if (auto popup = SelectPopup::create()) {
+        popup->show();
+    }
 }

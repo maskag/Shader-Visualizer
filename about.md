@@ -12,11 +12,11 @@ The mod also includes **Old Color trigger sprite support**, improving compatibil
 ---
 
 ## Features
-- **11 triggers with label support**
+- **12 triggers with label support**
     - Event, UI, Static Camera
     - Time, Time Event, Time Control
     - Item Comp, Item Edit, Item Pers
-    - Song, Song Edit
+    - Song, Song Edit, Area Triggers
 - **25 triggers with dynamic textures**
     - Item triggers, Collision, Spawn, Event
     - Move, Rotate, Color, Pulse, Gravity, StartPos

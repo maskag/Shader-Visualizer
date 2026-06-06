@@ -24,12 +24,14 @@ public:
 
 class SpriteSwitchNodeV3 : public SettingValueNodeV3<SpriteSwitchSettingV3> {
 protected:
-    static std::string resolveSettingSprite(std::string const& key) {
-        auto resolved = key;
-        if (!resolved.empty()) {
-            return resolved;
+    static CCSprite* createSettingSprite(std::string const& key) {
+        if (auto sprite = texture::createRawSprite(key, theme::Themes::Visualizer)) {
+            return sprite;
         }
-        return key;
+
+        auto placeholder = CCSprite::create();
+        placeholder->setContentSize({ 50.f, 50.f });
+        return placeholder;
     }
 
     bool init(std::shared_ptr<SpriteSwitchSettingV3> setting, float width) {
@@ -38,12 +40,12 @@ protected:
         auto menu = this->getButtonMenu();
         menu->removeAllChildren();
 
-        auto btn1Spr = texture::createRawSprite(resolveSettingSprite(setting->m_spr1));
+        auto btn1Spr = createSettingSprite(setting->m_spr1);
         btn1Spr->setScale(0.6f);
         auto btn1 = CCMenuItemSpriteExtra::create(btn1Spr, this, menu_selector(SpriteSwitchNodeV3::onSelectFalse));
         btn1->setTag(0);
 
-        auto btn2Spr = texture::createRawSprite(resolveSettingSprite(setting->m_spr2));
+        auto btn2Spr = createSettingSprite(setting->m_spr2);
         btn2Spr->setScale(0.6f);
         auto btn2 = CCMenuItemSpriteExtra::create(btn2Spr, this, menu_selector(SpriteSwitchNodeV3::onSelectTrue));
         btn2->setTag(1);
@@ -102,6 +104,12 @@ SettingNodeV3* SpriteSwitchSettingV3::createNode(float width) {
 $execute {
     if (auto mod = Mod::get()) {
         (void)mod->registerCustomSettingType("sprite-switch", &SpriteSwitchSettingV3::parse);
+
+        ButtonSettingPressedEventV3(mod, "theme-selector").listen([](auto buttonKey) {
+            if (buttonKey == "open") {
+                theme::showSelectPopup();
+            }
+        }).leak();
     }
 }
 

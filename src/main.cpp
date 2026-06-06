@@ -1,5 +1,7 @@
 ﻿#include "dynamic/dynamic.hpp"
 #include "dynamic/cache.hpp"
+#include "texture/texture.hpp"
+#include "texture/theme.hpp"
 #include <Geode/modify/EffectGameObject.hpp>
 #include <Geode/modify/EditorUI.hpp>
 #include <Geode/modify/SetupTriggerPopup.hpp>
@@ -10,11 +12,40 @@
 #include <Geode/modify/SetupCameraModePopup.hpp>
 #include <Geode/modify/ColorSelectPopup.hpp>
 
-
 static bool s_dynamicReady = false;
 
 static bool isModEnabled() {
     return getSwitchValue("new-triggers");
+}
+
+static void applyLevelObjectAppearance(EffectGameObject* obj) {
+    if (!obj || !isModEnabled()) {
+        return;
+    }
+
+    auto it = texture::iconMap.find(obj->m_objectID);
+    if (it != texture::iconMap.end()) {
+        auto icon = texture::sprite(it->second);
+        if (!icon.empty()) {
+            texture::setObjIcon(obj, icon);
+            LevelEditorLayer::updateObjectLabel(obj);
+        }
+    }
+
+    if (s_dynamicReady && getSwitchValue("dyn-enable")) {
+        auto settings = dynamic::getSettings();
+        dynamic::applyUpdates(obj, settings);
+    }
+}
+
+static void applyLevelObjectAppearances(CCArray* objects) {
+    if (!objects || !isModEnabled()) {
+        return;
+    }
+
+    for (auto obj : CCArrayExt<GameObject*>(objects)) {
+        applyLevelObjectAppearance(typeinfo_cast<EffectGameObject*>(obj));
+    }
 }
 
 static void refreshLevelIcons() {
@@ -38,19 +69,7 @@ static void refreshLevelIcons() {
 }
 
 static void applyDynamicToObjects(CCArray* objects) {
-    if (!objects) {
-        return;
-    }
-    if (!isModEnabled() || !s_dynamicReady || !getSwitchValue("dyn-enable")) {
-        return;
-    }
-
-    auto ds = dynamic::getSettings();
-    for (auto obj : CCArrayExt<GameObject*>(objects)) {
-        if (auto eff = typeinfo_cast<EffectGameObject*>(obj)) {
-            cache::applyUpdatesCached(eff, ds);
-        }
-    }
+    applyLevelObjectAppearances(objects);
 }
 
 // change texture
@@ -62,15 +81,17 @@ class $modify(MyEffectGameObject, EffectGameObject) {
             return;
         }
 
+        if (theme::getCurrentTheme() == theme::Themes::Standard &&
+            !cacheUtils::isLevelObject(this)) {
+            return;
+        }
+
         int id = m_objectID;
 
         auto it = texture::iconMap.find(id);
 
         if (it != texture::iconMap.end()) {
             auto icon = texture::sprite(it->second);
-            if (icon == "") {
-                return;
-            }
             if (!icon.empty()) {
                 texture::setObjIcon(this, icon);
             }
@@ -95,18 +116,15 @@ class $modify(ShowDynamic, EditorUI) {
             return true;
         }
 
-        if (!getSwitchValue("dyn-logic") && !getSwitchValue("dyn-cam") &&
-            !getSwitchValue("dyn-game") && !getSwitchValue("dyn-color")) {
-            return true;
-        }
-
         s_dynamicReady = false;
         this->runAction(CCSequence::create(
             CCDelayTime::create(0.0f),
             CallFuncExt::create([]() {
                 s_dynamicReady = true;
                 cache::clear();
-                cache::applyChangesGlobal();
+                if (auto lel = LevelEditorLayer::get()) {
+                    applyLevelObjectAppearances(lel->m_objects);
+                }
             }),
             nullptr
         ));
@@ -118,14 +136,8 @@ class $modify(ShowDynamic, EditorUI) {
         if (!obj) {
             return obj;
         }
-        if (!isModEnabled() || !s_dynamicReady || !getSwitchValue("dyn-enable")) {
-            return obj;
-        }
 
-        if (auto eff = typeinfo_cast<EffectGameObject*>(obj)) {
-            auto ds = dynamic::getSettings();
-            cache::applyUpdatesCached(eff, ds);
-        }
+        applyLevelObjectAppearance(typeinfo_cast<EffectGameObject*>(obj));
         return obj;
     }
 
@@ -137,6 +149,12 @@ class $modify(ShowDynamic, EditorUI) {
     void onPaste(CCObject* sender) {
         EditorUI::onPaste(sender);
         applyDynamicToObjects(this->getSelectedObjects());
+    }
+
+    CCArray* pasteObjects(gd::string str, bool withColor, bool noUndo) {
+        auto objects = EditorUI::pasteObjects(str, withColor, noUndo);
+        applyLevelObjectAppearances(objects);
+        return objects;
     }
 
 
