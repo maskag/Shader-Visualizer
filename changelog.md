@@ -1,3 +1,7 @@
+# <cg>v3.0.0-beta.4</c>
+## TOGGLE SPRITE, I HATE YOU
+- Removed the toggle sprite, which wasn't supposed to be in the mod
+
 # <cg>v3.0.0-beta.3</c>
 ## Theme System & Area Trigger Label
 - Added **label for Area triggers**
