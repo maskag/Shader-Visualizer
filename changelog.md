@@ -1,3 +1,8 @@
+# <cg>v3.0.0-beta.5</c>
+## Lazy bug fix
+- The crash when selecting a color via the HSV may have been fixed
+- Coding on a phone is awful (I’m on vacation)
+
 # <cg>v3.0.0-beta.4</c>
 ## TOGGLE SPRITE, I HATE YOU
 - Removed the toggle sprite, which wasn't supposed to be in the mod
