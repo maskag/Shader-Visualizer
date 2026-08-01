@@ -1,4 +1,4 @@
-﻿#include "dynamic/dynamic.hpp"
+#include "dynamic/dynamic.hpp"
 #include "dynamic/cache.hpp"
 #include "texture/texture.hpp"
 #include "texture/theme.hpp"
@@ -231,6 +231,10 @@ class $modify(MyColorSelectPopup, ColorSelectPopup) {
         if (!isModEnabled()) {
             return;
         }
+
+        if (!gameObject || !gameObjects || !colorObjects) {
+            return;
+        }
         cache::markDirty(gameObject);
         cache::markDirty(gameObjects);
         cache::markDirty(colorObjects);
@@ -241,7 +245,10 @@ class $modify(MyColorSelectPopup, ColorSelectPopup) {
         Ref<EffectGameObject> gameObject = this->m_gameObject;
         Ref<CCArray> gameObjects = this->m_gameObjects;
         Ref<CCArray> colorObjects = this->m_colorObjects;
-
+        // This will probably fix color slider bug 
+        if (!gameObject || !gameObjects || !colorObjects) {
+            return;
+        }
         ColorSelectPopup::onClose(sender);
         applyColorPopupDynamicUpdate(gameObject, gameObjects, colorObjects);
     }
@@ -251,6 +258,9 @@ class $modify(MyColorSelectPopup, ColorSelectPopup) {
         Ref<CCArray> gameObjects = this->m_gameObjects;
         Ref<CCArray> colorObjects = this->m_colorObjects;
 
+        if (!gameObject || !gameObjects || !colorObjects) {
+            return;
+        }
         ColorSelectPopup::closeColorSelect(sender);
         applyColorPopupDynamicUpdate(gameObject, gameObjects, colorObjects);
     }
