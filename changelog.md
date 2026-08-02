@@ -1,12 +1,14 @@
 # <cg>v3.0.0-beta.6</c>
 ## One more bug fix
 - Fixed a bug where the select color popup wouldn't close
-- bug when selecting a color via the HSV may have been fixed
+- Fixed a bug where the HSV color picker wasn't working
+- The Color Trigger dynamic texture may have some issues
 - Hopefully this is the last bug fix
+- Once I'm back from vacation, I'll release a proper update and fix everything that still needs attention
 
 # <cg>v3.0.0-beta.5</c>
 ## Lazy bug fix 
-- ~~bug when selecting a color via the HSV may have been fixed~~
+- ~~Fixed a bug where the HSV color picker wasn't working~~
 - Coding on a phone is awful (I’m on vacation)
 
 # <cg>v3.0.0-beta.4</c>
