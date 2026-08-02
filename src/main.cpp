@@ -224,27 +224,6 @@ class $modify(MySetupCameraOffsetTrigger, SetupCameraOffsetTrigger) {
 };
 
 class $modify(MyColorSelectPopup, ColorSelectPopup) {
-    static void applyColorPopupDynamicUpdate(
-        EffectGameObject* gameObject,
-        CCArray* gameObjects,
-        CCArray* colorObjects
-    ) {
-        if (!isModEnabled()) {
-            return;
-        }
-        // MAYBE this could fix that bug 
-        if (!this->m_colorTrigger) {
-            return;
-        }
-        if (!gameObject || !gameObjects || !colorObjects) {
-            return;
-        }
-        cache::markDirty(gameObject);
-        cache::markDirty(gameObjects);
-        cache::markDirty(colorObjects);
-        cache::applyChangesGlobal();
-    }
-
     void onClose(cocos2d::CCObject* sender) {
         Ref<EffectGameObject> gameObject = this->m_gameObject;
         Ref<CCArray> gameObjects = this->m_gameObjects;
@@ -256,6 +235,7 @@ class $modify(MyColorSelectPopup, ColorSelectPopup) {
         if (!gameObject || !gameObjects || !colorObjects) {
             return;
         }
+        // MAYBE this could fix that bug 
         if (!this->m_colorTrigger) {
             return;
         }
