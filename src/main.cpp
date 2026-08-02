@@ -245,11 +245,13 @@ class $modify(MyColorSelectPopup, ColorSelectPopup) {
         Ref<EffectGameObject> gameObject = this->m_gameObject;
         Ref<CCArray> gameObjects = this->m_gameObjects;
         Ref<CCArray> colorObjects = this->m_colorObjects;
+        
+        // i forgot about this
+        ColorSelectPopup::onClose(sender); 
         // This will probably fix color slider bug 
         if (!gameObject || !gameObjects || !colorObjects) {
             return;
         }
-        ColorSelectPopup::onClose(sender);
         applyColorPopupDynamicUpdate(gameObject, gameObjects, colorObjects);
     }
 
@@ -258,10 +260,10 @@ class $modify(MyColorSelectPopup, ColorSelectPopup) {
         Ref<CCArray> gameObjects = this->m_gameObjects;
         Ref<CCArray> colorObjects = this->m_colorObjects;
 
+        ColorSelectPopup::closeColorSelect(sender);
         if (!gameObject || !gameObjects || !colorObjects) {
             return;
         }
-        ColorSelectPopup::closeColorSelect(sender);
         applyColorPopupDynamicUpdate(gameObject, gameObjects, colorObjects);
     }
 };
