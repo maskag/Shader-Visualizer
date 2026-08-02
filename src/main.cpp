@@ -223,41 +223,7 @@ class $modify(MySetupCameraOffsetTrigger, SetupCameraOffsetTrigger) {
     }
 };
 
-class $modify(MyColorSelectPopup, ColorSelectPopup) {
-    void onClose(cocos2d::CCObject* sender) {
-        Ref<EffectGameObject> gameObject = this->m_gameObject;
-        Ref<CCArray> gameObjects = this->m_gameObjects;
-        Ref<CCArray> colorObjects = this->m_colorObjects;
-        
-        // i forgot about this
-        ColorSelectPopup::onClose(sender); 
-        // This will probably fix color slider bug 
-        if (!gameObject || !gameObjects || !colorObjects) {
-            return;
-        }
-        // MAYBE this could fix that bug 
-        if (!this->m_colorTrigger) {
-            return;
-        }
-        applyColorPopupDynamicUpdate(gameObject, gameObjects, colorObjects);
-    }
-
-    void closeColorSelect(cocos2d::CCObject* sender) {
-        Ref<EffectGameObject> gameObject = this->m_gameObject;
-        Ref<CCArray> gameObjects = this->m_gameObjects;
-        Ref<CCArray> colorObjects = this->m_colorObjects;
-
-        ColorSelectPopup::closeColorSelect(sender);
-        if (!gameObject || !gameObjects || !colorObjects) {
-            return;
-        }
-                
-        if (!this->m_colorTrigger) {
-            return;
-        }
-        applyColorPopupDynamicUpdate(gameObject, gameObjects, colorObjects);
-    }
-};
+// Im just gonna delete all this shit. Ill fix it when I get back from vacation
 
 class $modify(MyLevelSettingsLayer, LevelSettingsLayer) {
     void onClose(cocos2d::CCObject* sender) {
