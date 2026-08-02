@@ -1,11 +1,12 @@
 # <cg>v3.0.0-beta.6</c>
 ## One more bug fix
 - Fixed a bug where the select color popup wouldn't close
+- bug when selecting a color via the HSV may have been fixed
 - Hopefully this is the last bug fix
 
 # <cg>v3.0.0-beta.5</c>
-## Lazy bug fix
-- The crash when selecting a color via the HSV may have been fixed
+## Lazy bug fix 
+- ~~bug when selecting a color via the HSV may have been fixed~~
 - Coding on a phone is awful (I’m on vacation)
 
 # <cg>v3.0.0-beta.4</c>
