@@ -199,7 +199,8 @@ class $modify(MySetupTriggerPopup, SetupTriggerPopup) {
         if (!isModEnabled()) {
             return;
         }
-        
+
+
         cache::markDirty(gameObject);
         cache::markDirty(gameObjects);
         cache::applyChangesGlobal();
@@ -231,7 +232,10 @@ class $modify(MyColorSelectPopup, ColorSelectPopup) {
         if (!isModEnabled()) {
             return;
         }
-
+        // MAYBE this could fix that bug 
+        if (!this->m_colorTrigger) {
+            return;
+        }
         if (!gameObject || !gameObjects || !colorObjects) {
             return;
         }
@@ -252,6 +256,9 @@ class $modify(MyColorSelectPopup, ColorSelectPopup) {
         if (!gameObject || !gameObjects || !colorObjects) {
             return;
         }
+        if (!this->m_colorTrigger) {
+            return;
+        }
         applyColorPopupDynamicUpdate(gameObject, gameObjects, colorObjects);
     }
 
@@ -262,6 +269,10 @@ class $modify(MyColorSelectPopup, ColorSelectPopup) {
 
         ColorSelectPopup::closeColorSelect(sender);
         if (!gameObject || !gameObjects || !colorObjects) {
+            return;
+        }
+                
+        if (!this->m_colorTrigger) {
             return;
         }
         applyColorPopupDynamicUpdate(gameObject, gameObjects, colorObjects);
